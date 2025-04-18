@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- App Display Name and Name -->
+    <key>CFBundleDisplayName</key>
+    <string>AI Assistant</string>
+    <key>CFBundleName</key>
+    <string>AI Assistant</string>
+    
+    <!-- Unique Identifier for the App (Update with your own domain) -->
+    <key>CFBundleIdentifier</key>
+    <string>com.example.AIAssistant</string>
+    
+    <!-- App Versioning -->
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    
+    <!-- Ensures the app runs on iOS -->
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+
+    <!-- Launch Screen Storyboard name -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+    <!-- Supported Device Capabilities -->
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>armv7</string>
+    </array>
+    
+    <!-- Supported Interface Orientations for iPhone -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    
+    <!-- Supported Interface Orientations for iPad -->
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    
+    <!-- Privacy keys for microphone and speech recognition -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app requires access to the microphone for speech recognition.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>This app uses speech recognition to convert your speech to text.</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>This app requires access to your calendar to schedule tasks and events.</string>
+    <key>NSRemindersUsageDescription</key>
+    <string>This app requires access to your reminders to create and manage reminder tasks.</string>
+</dict>
+</plist>

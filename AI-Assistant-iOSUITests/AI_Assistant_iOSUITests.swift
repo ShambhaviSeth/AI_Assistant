@@ -9,33 +9,75 @@ import XCTest
 
 final class AI_Assistant_iOSUITests: XCTestCase {
 
+    var app: XCUIApplication!
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        app = XCUIApplication()
+        // Ensure a fresh launch for each test
+        app.terminate()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        app.terminate()
+        app = nil
     }
 
+    /// Test that the app launches and shows the initial welcome message.
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+    func testLaunchShowsWelcomeMessage() throws {
+        app.launch()
+        // Expect the very first assistant message
+        let firstBubble = app.staticTexts["Welcome! How can I help you today?"]
+        XCTAssertTrue(firstBubble.waitForExistence(timeout: 2), "Welcome message should be visible on launch")
+    }
+
+    /// Test sending a text command and receiving a response.
+    @MainActor
+    func testSendTextCommandDisplaysAssistantReply() throws {
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let textField = app.textFields["Type your command..."]
+        XCTAssertTrue(textField.exists, "The command text field should exist")
+        textField.tap()
+        textField.typeText("what is the time?\n")
+
+        // Tap the Send button
+        let sendButton = app.buttons["Send"]
+        XCTAssertTrue(sendButton.exists, "Send button should exist")
+        sendButton.tap()
+
+        // Wait for the assistant response to appear
+        let responsePredicate = NSPredicate(format: "label CONTAINS[c] 'current time is'")
+        let response = app.staticTexts.containing(responsePredicate).firstMatch
+        XCTAssertTrue(response.waitForExistence(timeout: 5), "Assistant should respond with current time")
     }
 
+    /// Test that the microphone button exists and toggles recording state.
+    @MainActor
+    func testMicrophoneButtonTogglesRecording() throws {
+        app.launch()
+
+        let micButton = app.buttons["mic.fill"]
+        XCTAssertTrue(micButton.exists, "Microphone button should exist")
+
+        // Start recording
+        micButton.tap()
+        // The button symbol should change to "stop.fill" when recording
+        let stopButton = app.buttons["stop.fill"]
+        XCTAssertTrue(stopButton.waitForExistence(timeout: 2), "Stop button should appear when recording starts")
+
+        // Stop recording
+        stopButton.tap()
+        XCTAssertTrue(micButton.waitForExistence(timeout: 2), "Microphone button should reappear when recording stops")
+    }
+
+    /// Measure app launch performance, terminating before each launch.
     @MainActor
     func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
+            app.terminate()
+            app.launch()
         }
     }
 }

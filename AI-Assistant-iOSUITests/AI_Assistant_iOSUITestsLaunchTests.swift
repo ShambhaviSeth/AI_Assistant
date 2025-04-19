@@ -17,14 +17,13 @@ final class AI_Assistant_iOSUITestsLaunchTests: XCTestCase {
         continueAfterFailure = false
     }
 
+    /// Captures a screenshot of the launch screen for verification.
     @MainActor
-    func testLaunch() throws {
+    func testLaunch_showLaunchScreen() throws {
         let app = XCUIApplication()
         app.launch()
 
-        // Insert steps here to perform after app launch but before taking a screenshot,
-        // such as logging into a test account or navigating somewhere in the app
-
+        // Take and attach a screenshot of the initial UI state.
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "Launch Screen"
         attachment.lifetime = .keepAlways

@@ -83,3 +83,9 @@ class AlarmManager {
         }
     }
 }
+// MARK: - Testing Helper
+extension AlarmManager {
+    func test_parseTime(_ s: String) -> Date? {
+        return parseTime(from: s)
+    }
+}
